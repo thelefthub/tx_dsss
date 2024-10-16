@@ -23,35 +23,31 @@ signal load_shift: std_logic := '0';
 
 begin
     
-    btn_input_sync <= pres_shift(0); -- signal out
-    load_shift   <= pres_shift(0) xor btn_input;
+btn_input_sync <= pres_shift(0); -- signal out
+load_shift   <= pres_shift(0) xor btn_input;
 
 -- sequential process: (Flip-flop behavior)
 syn_shift: process(clk)
 begin
-    
-if rising_edge(clk) and clk_enable = '1' then
-    if rst = '1' then
-        pres_shift <= (others => '0');
-    else --instantiëren geheugen flip flops!!!!
-    pres_shift <= next_shift;
+    if rising_edge(clk) and clk_enable = '1' then
+        if rst = '1' then
+            pres_shift <= (others => '0');
+        else --instantiate flip flops memory!
+            pres_shift <= next_shift;
+        end if;
     end if;
-end if;
-
 end process syn_shift;
 
 -- Combinational process (Next-state logic)
--- each if minimally needs a unconditional else!!!!
+-- each if minimally needs an unconditional else!!!!
 com_shift: process(pres_shift, load_shift) 
 begin
-    
     if (load_shift ='1') then 
-        -- Shift right, insert the new sampled input at the MSB
+        -- Shift right, bit concatenation of input at the MSB and 3 present shift bits
         next_shift <= btn_input & pres_shift(3 downto 1); --bit concat
     else --parallel load
-        next_shift <= (others => pres_shift(0));--others: all unset bits
+        next_shift <= (others => pres_shift(0));--others: all unset bits to LSB of present shift
     end if; 
-
 end process com_shift; 
     
 end behav;

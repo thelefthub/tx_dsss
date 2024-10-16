@@ -1,4 +1,4 @@
--- test bench of debouncer
+-- test bench for debouncer
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
@@ -58,14 +58,14 @@ BEGIN
     tb : PROCESS
     procedure tbvector(constant stimvect : in std_logic_vector(1 downto 0))is
         begin
-            btn_input <= stimvect(1);
+        btn_input <= stimvect(1);
         rst <= stimvect(0);
 
         wait for period;
     end tbvector;
     
     BEGIN
-        --reset signaal 2 hoog, 2 laag
+        --reset 2H, 2L
         tbvector("01");
         tbvector("01");
         tbvector("00");
