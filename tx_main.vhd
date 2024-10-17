@@ -11,7 +11,7 @@ entity main is
      btn_up, btn_down: in std_logic;
      seg_display: out std_logic_vector(7 downto 0);
      dip_sw: in std_logic_vector(1 downto 0);
-    test_out: out std_logic_vector(3 downto 0); --test
+    -- test_out: out std_logic_vector(3 downto 0); --test
      sdo_spread: out std_logic
     
      );
@@ -51,7 +51,7 @@ component access_layer is
 end component access_layer;
 
 -- Internal signals for connecting components
-signal count_data: std_logic_vector(3 downto 0);
+signal count_data, test: std_logic_vector(3 downto 0);
 signal sdo_posenc, pn_start: std_logic;
 -- Inverted signals
 signal rst_inv, btn_up_inv,btn_down_inv : std_logic;
@@ -64,7 +64,7 @@ begin
     btn_down_inv <= not btn_down;
     dip_sw_inv <= not dip_sw;
     
-    test_out <= count_data; --test
+    -- test_out <= count_data; --test
     
     -- instances of layer components
     tx_app_layer: app_layer PORT MAP(
@@ -82,7 +82,7 @@ begin
         rst => rst_inv,
         clk_enable => clk_enable,
         pn_start => pn_start,
-        data => "0001", --count_data, --"0001"
+        data => count_data, --count_data, --"0001"
         sdo_posenc => sdo_posenc
     );
 

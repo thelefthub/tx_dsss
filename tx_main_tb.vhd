@@ -16,7 +16,7 @@ component main is
         btn_up, btn_down: in std_logic;
         seg_display: out std_logic_vector(7 downto 0);
         dip_sw: in std_logic_vector(1 downto 0);
-        test_out: out std_logic_vector(3 downto 0);--test
+        -- test_out: out std_logic_vector(3 downto 0);--test
         sdo_spread: out std_logic
         
         );
@@ -32,7 +32,7 @@ signal clk, rst: std_logic;
 signal btn_up, btn_down, sdo_spread: std_logic;
 signal seg_display: std_logic_vector(7 downto 0);
 signal dip_sw: std_logic_vector(1 downto 0);
-signal test_out: std_logic_vector(3 downto 0); --test
+-- signal test_out: std_logic_vector(3 downto 0); --test
 
 BEGIN
     uut: main PORT MAP(
@@ -43,7 +43,7 @@ BEGIN
       btn_down => btn_down,
       seg_display => seg_display,
       dip_sw => dip_sw,
-      test_out => test_out, --test
+    --   test_out => test_out, --test
       sdo_spread => sdo_spread
       
       );
@@ -98,29 +98,40 @@ BEGIN
         tbvector("111");
         wait for period*10;
 
+        -- wait to verify spread
+        wait for period*400;
+
         --start debounce btn up
         tbvector("101");
         tbvector("101");
         tbvector("111");
         tbvector("111");
         
-        --keep high (1 up)
+        --keep high (2 up)
         tbvector("101");
         wait for period*10;
         -- no btn push
         tbvector("111");
         wait for period*10;
 
-        -- wait to verify spread?
-        wait for period*200;
+        -- wait to verify repeating spread
+        wait for period*1200;
         
-        -- dip selection (unencrypted):
-        -- dip_sw <= "01";
-        -- wait for period*50;
+        -- dip selection (encrypted):
+        dip_sw <= "01";
+        wait for period*500;
+
+         -- dip selection (encrypted):
+         dip_sw <= "10";
+         wait for period*500;
+
+        -- dip selection (encrypted):
+        dip_sw <= "00";
+        wait for period*500;
 
         -- reset
-        -- tbvector("110");
-        -- wait for period*10;
+        tbvector("110");
+        wait for period*10;
                             
         end_of_sim <= true;
         wait;

@@ -18,7 +18,7 @@ architecture behav of data_register is
 
 -- Preamble is used for detecting data sequences (hence shift preamble out first)
 constant preamble: std_logic_vector(6 downto 0) := "0111110";
-signal pres_data, next_data: std_logic_vector(10 downto 0) := preamble&"0000";
+signal pres_data, next_data: std_logic_vector(10 downto 0) := preamble & "0000";
 
 begin
 
@@ -38,7 +38,7 @@ begin
 end process syn_shift;
 
 -- Combinational process (Next-state logic)
-com_shift: process(pres_data, ld, sh) 
+com_shift: process(pres_data, ld, sh, data) 
 begin
     if (ld = '1') then
         next_data <= preamble & data;
