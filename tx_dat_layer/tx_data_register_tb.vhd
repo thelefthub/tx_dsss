@@ -85,6 +85,14 @@ BEGIN
             tbvector("100");
         end loop;
 
+        -- load
+        tbvector("010");
+
+        --shift 10 times (cf. expected)
+        for i in 0 to 9 loop
+            tbvector("100");
+        end loop;
+
         -- test reset
         tbvector("010");
         tbvector("001");

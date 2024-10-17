@@ -9,6 +9,7 @@ entity seq_controller is
      clk, rst: in std_logic;
      ld, sh: out std_logic;
      clk_enable: in std_logic;
+    --  count_test: out std_logic_vector(3 downto 0); --test
      pn_start: in std_logic
      );
 end seq_controller;
@@ -19,7 +20,10 @@ type seq_type is (RESET, LOAD, SHIFT);
 signal pres_count, next_count: std_logic_vector(3 downto 0);
 signal pres_seq, next_seq: seq_type := RESET;
 
+
 begin
+
+-- count_test <= pres_count; --test
 
 syn_sequence: process(clk)
 begin
@@ -36,31 +40,32 @@ end process syn_sequence;
 
 -- state machine for data handling
 -- sync data output (load/schift on a new pn sequence): 1 load - 10 shift
-com_sequence: process(pres_seq, pn_start) 
+com_sequence: process(pres_seq, pres_count, pn_start) 
 begin
     if (pn_start ='1') then
         case pres_seq is
             when RESET => 
                 ld <= '1';
                 sh <= '0';
-                next_count	<= pres_count + 1;
+                next_count	<= pres_count + "0001";
                 next_seq <= LOAD;	
             when LOAD => 
                 ld <= '0';
                 sh <= '1';
-                next_count	<= pres_count + 1;
+                next_count	<= pres_count + "0001";
                 next_seq <= SHIFT;
             when SHIFT =>
-                if (pres_count = "1010") then
+                if (pres_count = "1010") then -- 1 load - 10 shift
                     ld <= '0';
                     sh <= '1';
+                    next_count	<= (others => '0'); --"0000";
                     next_seq <= RESET;
                 else
                     ld <= '0';
                     sh <= '1';
+                    next_count	<= pres_count + "0001";
                     next_seq <= SHIFT;
                 end if;
-                next_count	<= pres_count + 1;
             when others =>
                 ld <= '0';
                 sh <= '0';
@@ -68,6 +73,7 @@ begin
         end case;
     else
         next_seq <= pres_seq;
+        next_count	<= pres_count;
         ld <= '0';
         sh <= '0';
     end if;

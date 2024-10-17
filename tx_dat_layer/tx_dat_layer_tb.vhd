@@ -75,16 +75,12 @@ BEGIN
 
         wait for period;
 
-        -- normal sequence
-        tbvector("10");
-
-        for i in 0 to 9 loop
-            tbvector("00");
-        end loop;
-
-        tbvector("10");
-        for i in 0 to 9 loop
-            tbvector("00");
+        -- normal sequence (expected result: repeating pattern of preamble 0111110 + mock data 0001)
+        for i in 0 to 50 loop
+            tbvector("10");
+            for i in 0 to 30 loop
+                tbvector("00");
+            end loop;
         end loop;
         
         -- broken sequence (test reset)

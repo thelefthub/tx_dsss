@@ -9,10 +9,11 @@ entity main is
      clk, rst: in std_logic;
      clk_enable: in std_logic;
      btn_up, btn_down: in std_logic;
-     seg_display: out std_logic_vector(7 downto 0);--:=(others =>'1'); --initialize on default (all segments off)
+     seg_display: out std_logic_vector(7 downto 0);
      dip_sw: in std_logic_vector(1 downto 0);
+    test_out: out std_logic_vector(3 downto 0); --test
      sdo_spread: out std_logic
-    --  test_out: out std_logic_vector(3 downto 0)
+    
      );
 end main;
 
@@ -63,7 +64,7 @@ begin
     btn_down_inv <= not btn_down;
     dip_sw_inv <= not dip_sw;
     
-    -- test_out <= count_data;
+    test_out <= count_data; --test
     
     -- instances of layer components
     tx_app_layer: app_layer PORT MAP(
@@ -81,7 +82,7 @@ begin
         rst => rst_inv,
         clk_enable => clk_enable,
         pn_start => pn_start,
-        data => count_data,
+        data => "0001", --count_data, --"0001"
         sdo_posenc => sdo_posenc
     );
 

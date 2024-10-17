@@ -14,6 +14,7 @@ component seq_controller is
         clk, rst: in std_logic;
         ld, sh: out std_logic;
         clk_enable: in std_logic;
+        -- count_test: out std_logic_vector(3 downto 0); --test
         pn_start: in std_logic
         );
 end component seq_controller;
@@ -27,6 +28,7 @@ signal end_of_sim : boolean := false;
 signal clk, rst:  std_logic;
 signal ld, sh:  std_logic;
 signal pn_start:  std_logic;
+-- signal count_test: std_logic_vector(3 downto 0); --test
 
 BEGIN
     uut: seq_controller PORT MAP(
@@ -35,6 +37,7 @@ BEGIN
       clk_enable => '1',
       pn_start => pn_start,
       ld => ld,
+    --   count_test => count_test, --test
       sh => sh
       );
 
@@ -70,15 +73,11 @@ BEGIN
         tbvector("00");
 
         -- normal sequence
-        tbvector("10");
-
-        for i in 0 to 9 loop
-            tbvector("00");
-        end loop;
-
-        tbvector("10");
-        for i in 0 to 9 loop
-            tbvector("00");
+        for i in 0 to 50 loop
+            tbvector("10");
+            for i in 0 to 30 loop
+                tbvector("00");
+            end loop;
         end loop;
         
         -- broken sequence (test reset)
