@@ -16,7 +16,6 @@ component main is
         btn_up, btn_down: in std_logic;
         seg_display: out std_logic_vector(7 downto 0);
         dip_sw: in std_logic_vector(1 downto 0);
-        -- test_out: out std_logic_vector(3 downto 0);--test
         sdo_spread: out std_logic
         
         );
@@ -32,7 +31,6 @@ signal clk, rst: std_logic;
 signal btn_up, btn_down, sdo_spread: std_logic;
 signal seg_display: std_logic_vector(7 downto 0);
 signal dip_sw: std_logic_vector(1 downto 0);
--- signal test_out: std_logic_vector(3 downto 0); --test
 
 BEGIN
     uut: main PORT MAP(
@@ -43,7 +41,6 @@ BEGIN
       btn_down => btn_down,
       seg_display => seg_display,
       dip_sw => dip_sw,
-    --   test_out => test_out, --test
       sdo_spread => sdo_spread
       
       );
