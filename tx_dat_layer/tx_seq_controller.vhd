@@ -42,7 +42,12 @@ end process syn_sequence;
 -- sync data output (load/schift on a new pn sequence): 1 load - 10 shift
 com_sequence: process(pres_seq, pres_count, pn_start) 
 begin
-    if (pn_start ='1') then
+    -- Default assignments to avoid latches??
+    -- next_count <= pres_count;
+    -- next_seq <= pres_seq;
+    -- ld <= '0';
+    -- sh <= '0';
+    if pn_start ='1' then
         case pres_seq is
             when RESET => 
                 ld <= '1';
@@ -55,7 +60,7 @@ begin
                 next_count	<= pres_count + "0001";
                 next_seq <= SHIFT;
             when SHIFT =>
-                if (pres_count = "1010") then -- 1 load - 10 shift
+                if pres_count = "1010" then -- 1 load - 10 shift
                     ld <= '0';
                     sh <= '1';
                     next_count	<= (others => '0'); --"0000";

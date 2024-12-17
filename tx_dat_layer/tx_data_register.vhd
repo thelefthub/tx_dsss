@@ -40,9 +40,9 @@ end process syn_shift;
 -- Combinational process (Next-state logic)
 com_shift: process(pres_data, ld, sh, data) 
 begin
-    if (ld = '1') then
+    if ld = '1' then
         next_data <= preamble & data;
-    elsif (sh = '1') then
+    elsif sh = '1' then
         next_data <= pres_data(9 downto 0) & sh; --concat with random bit (i.e. shift)?
     else -- each if minimally needs an unconditional else!
         next_data <= pres_data;

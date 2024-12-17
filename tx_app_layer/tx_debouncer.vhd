@@ -42,7 +42,7 @@ end process syn_shift;
 -- each if minimally needs an unconditional else!!!!
 com_shift: process(pres_shift, load_shift) 
 begin
-    if (load_shift ='1') then 
+    if load_shift ='1' then 
         -- Shift right, bit concatenation of input at the MSB and 3 present shift bits
         next_shift <= btn_input & pres_shift(3 downto 1); --bit concat
     else --parallel load

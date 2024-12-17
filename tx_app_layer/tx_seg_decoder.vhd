@@ -16,7 +16,7 @@ architecture behav of decoder is
 begin
     com_display: process(digit)
     -- disable decimal point segment
-    CONSTANT dp :std_logic:='1';
+    constant dp :std_logic:='1';
     begin
         case digit is
             when "0000" => segments <= "0000001" & dp; -- 0

@@ -25,7 +25,7 @@ for uut : main use entity work.main(behav);
 
 constant period : time := 100 ns;
 
--- constant delay  : time :=  10 ns;
+constant delay  : time :=  10 ns;
 signal end_of_sim : boolean := false;
 signal clk, rst: std_logic;
 signal btn_up, btn_down, sdo_spread: std_logic;
@@ -66,7 +66,6 @@ BEGIN
         rst <= stimvect(0);
         btn_up <= stimvect(1);
         btn_down <= stimvect(2);
-        -- dip_sw <= "11";
         wait for period;
     end tbvector;
     
@@ -97,20 +96,43 @@ BEGIN
 
         -- wait to verify spread
         wait for period*400;
-
-        --start debounce btn up
-        tbvector("101");
-        tbvector("101");
-        tbvector("111");
-        tbvector("111");
         
-        --keep high (2 up)
-        tbvector("101");
-        wait for period*10;
-        -- no btn push
-        tbvector("111");
-        wait for period*10;
+        -- debounce and btn up to 4
+        for i in 2 downto 0 loop
+            --start debounce btn up
+            tbvector("101");
+            tbvector("101");
+            tbvector("111");
+            tbvector("111");
+            
+            --keep high (btn up)
+            tbvector("101");
+            wait for period*10;
+            -- no btn push
+            tbvector("111");
+            wait for period*10;
+        end loop;
 
+        -- wait to verify spread
+        wait for period*400;
+
+        -- debounce and btn down to 2
+        for i in 1 downto 0 loop
+            --start debounce btn up
+            tbvector("101");
+            tbvector("101");
+            tbvector("111");
+            tbvector("111");
+            
+            --keep high (2 down)
+            tbvector("011");
+            wait for period*10;
+            -- no btn push
+            tbvector("111");
+            wait for period*10;
+        end loop;
+
+        
         -- wait to verify repeating spread
         wait for period*1200;
         
@@ -133,5 +155,7 @@ BEGIN
         end_of_sim <= true;
         wait;
     END PROCESS;
+
+    
 
   END;

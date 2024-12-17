@@ -38,7 +38,7 @@ begin
     case pres_edge is
         when NO_PULSE => -- present state does not require sending out pulse signal
             pos_edge <= '0';
-            if (db_input = '1') then 
+            if db_input = '1' then 
                 next_edge <= PULSE;
             else 	
                 next_edge <= NO_PULSE;
@@ -48,7 +48,7 @@ begin
             next_edge <= PULSED;
         when PULSED => -- present state has sent out pulse signal
             pos_edge <= '0';
-            if (db_input = '0') then
+            if db_input = '0' then
                 next_edge <= RESET;
             else	
                 next_edge <= PULSED;

@@ -37,9 +37,9 @@ end process syn_count;
 
 com_count: process(pres_count, up, down) 
 begin
-    if (up = '1') then
+    if up = '1' then
         next_count <= pres_count + "0001";
-    elsif (down = '1') then
+    elsif down = '1' then
         next_count <= pres_count - "0001";
     else -- each if minimally needs an unconditional else!
         next_count <= pres_count;
