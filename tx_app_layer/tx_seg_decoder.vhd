@@ -5,7 +5,7 @@ use IEEE.std_logic_arith.all;
 use IEEE.std_logic_unsigned.all;
 
 entity decoder is
-    Port (
+    port (
         digit : in  std_logic_vector(3 downto 0);
         segments : out std_logic_vector(7 downto 0)  -- 8-segment output (abcdefg + dp)
     );

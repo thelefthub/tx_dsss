@@ -9,6 +9,7 @@ entity main is
      clk, rst: in std_logic;
      clk_enable: in std_logic;
      btn_up, btn_down: in std_logic;
+     syncha, synchb:	in std_logic:='0';
      seg_display: out std_logic_vector(7 downto 0);
      dip_sw: in std_logic_vector(1 downto 0);
      sdo_spread: out std_logic
@@ -23,6 +24,7 @@ port (
     clk, rst: in std_logic;
     clk_enable: in std_logic;
     btn_up, btn_down: in std_logic;
+    syncha, synchb:	in std_logic:='0';
     seg_display: out std_logic_vector(7 downto 0);
     count_out: out std_logic_vector(3 downto 0)
     );
@@ -55,6 +57,7 @@ signal sdo_posenc, pn_start: std_logic;
 -- Inverted signals
 signal rst_inv, btn_up_inv,btn_down_inv : std_logic;
 signal dip_sw_inv: std_logic_vector(1 downto 0);
+signal syncha_inv,synchb_inv : std_logic;
 
 begin
     -- All I/O active low!!!!! => invert I/O
@@ -62,6 +65,9 @@ begin
     btn_up_inv <= not btn_up;
     btn_down_inv <= not btn_down;
     dip_sw_inv <= not dip_sw;
+
+    syncha_inv <= not syncha;
+    synchb_inv <= not synchb;
     
     -- instances of layer components
     tx_app_layer: app_layer PORT MAP(
@@ -70,6 +76,8 @@ begin
         clk_enable => clk_enable,
         btn_up => btn_up_inv,
         btn_down => btn_down_inv,
+        syncha => syncha_inv,
+        synchb => synchb_inv,
         seg_display => seg_display,
         count_out => count_data
     );

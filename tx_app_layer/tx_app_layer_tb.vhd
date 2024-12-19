@@ -14,6 +14,7 @@ component app_layer is
         clk, rst: in std_logic;
         clk_enable: in std_logic;
         btn_up, btn_down: in std_logic;
+        syncha, synchb:	in std_logic:='0';
         seg_display: out std_logic_vector(7 downto 0);
         count_out: out std_logic_vector(3 downto 0)
      );

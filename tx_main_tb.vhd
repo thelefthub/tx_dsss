@@ -14,6 +14,7 @@ component main is
         clk, rst: in std_logic;
         clk_enable: in std_logic;
         btn_up, btn_down: in std_logic;
+        syncha, synchb:	in std_logic:='0';
         seg_display: out std_logic_vector(7 downto 0);
         dip_sw: in std_logic_vector(1 downto 0);
         sdo_spread: out std_logic
@@ -29,6 +30,8 @@ constant delay  : time :=  10 ns;
 signal end_of_sim : boolean := false;
 signal clk, rst: std_logic;
 signal btn_up, btn_down, sdo_spread: std_logic;
+signal syncha, synchb: std_logic;
+
 signal seg_display: std_logic_vector(7 downto 0);
 signal dip_sw: std_logic_vector(1 downto 0);
 
@@ -39,6 +42,8 @@ BEGIN
       clk_enable => '1',
       btn_up => btn_up,
       btn_down => btn_down,
+      syncha => syncha,
+      synchb => synchb,
       seg_display => seg_display,
       dip_sw => dip_sw,
       sdo_spread => sdo_spread
@@ -73,7 +78,12 @@ BEGIN
         -- reset
         tbvector("110");
         tbvector("110");
+        syncha <= '0';
+        synchb <= '0';
         wait for period;
+
+        
+
         
         -- dip selection (unencrypted):
         dip_sw <= "11";
@@ -149,8 +159,27 @@ BEGIN
         wait for period*500;
 
         -- reset
+        dip_sw <= "11";
         tbvector("110");
-        wait for period*10;
+        tbvector("111");
+        wait for period*500;
+
+        -- basic rotary tests
+
+        -- clockwise a to b
+        for i in 0 to 10 loop
+            wait for period;
+            syncha <= '0';
+            wait for period;
+            synchb <= '0';
+            wait for period * 5;
+            syncha <= '1';
+            wait for period;
+            synchb <= '1';
+            wait for period * 5;
+        end loop;
+
+        wait for period*1200;
                             
         end_of_sim <= true;
         wait;
@@ -158,4 +187,4 @@ BEGIN
 
     
 
-  END;
+END;

@@ -8,6 +8,7 @@ entity top is
     port (
      clk, rst: in std_logic;
      btn_up, btn_down: in std_logic;
+     syncha, synchb:	in std_logic:='0'; --not fully functional yet (not consistent)
      seg_display: out std_logic_vector(7 downto 0);
      dip_sw: in std_logic_vector(1 downto 0);
      sdo_spread: out std_logic
@@ -21,6 +22,7 @@ component main is
     clk, rst: in std_logic;
     clk_enable: in std_logic;
     btn_up, btn_down: in std_logic;
+    syncha, synchb:	in std_logic;
     seg_display: out std_logic_vector(7 downto 0);
     dip_sw: in std_logic_vector(1 downto 0);
     sdo_spread: out std_logic
@@ -45,6 +47,8 @@ begin
         clk_enable => clk_send,
         btn_up => btn_up,
         btn_down => btn_down,
+        syncha => syncha,
+        synchb => synchb,
         seg_display => seg_display,
         dip_sw => dip_sw,
         sdo_spread => sdo_spread

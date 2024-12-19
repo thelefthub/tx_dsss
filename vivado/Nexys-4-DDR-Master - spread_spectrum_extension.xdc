@@ -29,8 +29,8 @@ set_property -dict { PACKAGE_PIN E17   IOSTANDARD LVCMOS33 } [get_ports { seg_di
 set_property -dict { PACKAGE_PIN E16   IOSTANDARD LVCMOS33 } [get_ports { seg_display[0] }]; #IO_L11N_T1_SRCC_15 Sch=jb[7]
 
 ## Rotary encoder
-#set_property -dict { PACKAGE_PIN G13   IOSTANDARD LVCMOS33 } [get_ports { CH_A }]; #IO_0_15 Sch=jb[9]
-#set_property -dict { PACKAGE_PIN F13   IOSTANDARD LVCMOS33 } [get_ports { CH_B }]; #IO_L5P_T0_AD9P_15 Sch=jb[8]
+set_property -dict { PACKAGE_PIN G13   IOSTANDARD LVCMOS33 } [get_ports { syncha }]; #IO_0_15 Sch=jb[9]
+set_property -dict { PACKAGE_PIN F13   IOSTANDARD LVCMOS33 } [get_ports { synchb }]; #IO_L5P_T0_AD9P_15 Sch=jb[8]
 
 ## Transceiver module
 set_property -dict { PACKAGE_PIN A14   IOSTANDARD LVCMOS33 } [get_ports { sdo_spread }]; #IO_L9N_T1_DQS_AD3N_15 Sch=xa_n[1]
